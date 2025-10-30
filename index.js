@@ -3,17 +3,16 @@ const express = require("express");
 const { Client } = require("pg");
 const cors = require("cors");
 const bodyparser = require("body-parser");
-const dotenv = require('dotenv');
+const config=require('./config')
 
 //Inicialização das variáveis
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyparser.json());
-dotenv.config();
 
 //Definição da conexão
-const connectionString = process.env.DATABASE_URL
+const connectionString = config.DATABASE_URL
 const client = new Client(connectionString);
 
 //Primeira conexão(teste)
@@ -137,8 +136,8 @@ app.put("/usuarios/:id", (req, res) => {
 });
 
 //Tornar a API ativa na porta 9082
-app.listen(process.env.PORT, () =>
-    console.log("Servidor funcionando na porta " + process.env.PORT)
+app.listen(config.PORT, () =>
+    console.log("Servidor funcionando na porta " + config.PORT)
 );
 
 module.exports = app; 
